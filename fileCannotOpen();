@@ -1,0 +1,5 @@
+void fileCannotOpen()
+{
+  printf("File could not be opened.")
+  
+}
