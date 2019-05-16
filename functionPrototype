@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+void mapSelect(); //map.txt //use case to select map
+void getUsername (); //create username.txt
+void movement(); 
+void undoMove(); //5 times
+void replay(); //restart
+void quitGame(); //saves game before exit
+void saveGame(); //save game in sokoban.txt
+void loadGame(); //load from sokoban.txt
+void newGame(); //new game
+void displayLeader(); //shows ranking, command: t, display all map ranking, t<num> display map ranking //top: t //ranking.txt
+void displayHelp(); //display help: h
+
+//compile on cygwin
