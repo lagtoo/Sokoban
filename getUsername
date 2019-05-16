@@ -46,3 +46,32 @@ int main()
     return 0;
 }
 
+
+//soohun 
+
+    FILE* fp;
+  char inputUsername[10]; 
+  char check[10];
+  int i=0;
+  printf("input name : ");
+    fgets(inputUsername,10,stdin);
+  printf("Hello %s\n", inputUsername);
+  
+  if ((fp = fopen("username.txt","a+"))== NULL)
+  {
+    printf("FffF");
+  }
+  else  
+  { 
+     while(feof(fp)==0)
+     {
+        if (inputUsername == check)//check if username exists
+        {
+          printf("Exists");
+        }
+        else //if it doesnt write to file
+        {
+          fprintf(fp,"%s\n",inputUsername);
+        }
+      }
+  }
