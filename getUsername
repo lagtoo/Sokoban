@@ -1,36 +1,42 @@
-//안댐요
-
+#include <stdio.h>
 void getUsername()
-{ 
-  FILE *fp;
-  char inputUsername[10]; 
-  char check[10];
-  int i=0;
-  printf("input name : ");
-  scanf("%s\n",&inputUsername);
-  printf("Hello %s\n", inputUsername);
-  
-  if ((fp = fopen("username.txt","rw"))== NULL)
-  {
-    fileCannotOpen();
-    getUsername();
+{
+    FILE *fp;
+    char inputUsername[10];
+    char check[10];
+    int i=0;
+    printf("input name : ");
+    scanf("%s",&inputUsername);
+
+
+
+    if ((fp = fopen("username.txt","a+"))== NULL)
+    {
+        //fileCannotOpen();
+        getUsername();
     }
-  else  
-    { 
-      while(fprintf(fp,"%s",check)!=EOF)
-      {
-        if (inputUsername == check)//check if username exists
+    else
+    {
+
+        while(fscanf(fp,"%s",check)!=EOF)
         {
-          i=1; //if it exists i=1
-          break; //should break the while loop
+            if (inputUsername == check)//check if username exists
+            {
+                i=1; //if it exists i=1
+                break; //should break the while loop
+            }
+            else //if it doesnt write to file
+            {
+                 fprintf(fp,"%s\n",inputUsername);
+                 break;
+
+            }
         }
-        else //if it doesnt write to file
-        {
-          fprintf(fp,"%s\n",inputUsername);
-        }
-      }
-     }
+
+
+    }
     fclose(fp);
+    printf("Hello %s", inputUsername);
 }
 
 int main()
@@ -38,4 +44,5 @@ int main()
     getUsername();
 
     return 0;
-    }
+}
+
