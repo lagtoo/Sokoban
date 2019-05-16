@@ -17,7 +17,7 @@ void getUsername()
     }
   else  
     { 
-      while(fscanf(fp,"%s",check)!=EOF)
+      while(fprintf(fp,"%s",check)!=EOF)
       {
         if (inputUsername == check)//check if username exists
         {
@@ -29,8 +29,13 @@ void getUsername()
           fprintf(fp,"%s\n",inputUsername);
         }
       }
-          
-         
+     }
+    fclose(fp);
 }
-  
-  
+
+int main()
+{
+    getUsername();
+
+    return 0;
+    }
