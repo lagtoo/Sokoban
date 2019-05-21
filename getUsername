@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include<stdlib.h>
 void getUsername()
 {
     FILE *fp;
@@ -17,37 +18,38 @@ void getUsername()
     {
         fprintf(fp,"%s",inputUsername);
     }
+
     fclose(fp);
-    printf("Hello %s", inputUsername);
+    printf("Hello %s\n", inputUsername);
+    system("clear");
+
 }
-void printUsername() {
+void printUsername() 
+{
     FILE *fp;
     char username[10];
     if ((fp = fopen("username.txt", "r")) == NULL) {
         //fileCannotOpen();
         printUsername();
-    } else {
+    }
+    else
+        {
         while (fgets(username, 10, fp) != NULL)
         {
-            printf("%s", username);
 
         }
-
 
     }
     fclose(fp);
     printf("Hello %s", username);
 }
 
-void cls()
-{
-    system("clear");
 
-}
+
 
 int main()
 {
     getUsername();
-    cls();
+    printUsername();
     return 0;
 }
