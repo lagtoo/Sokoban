@@ -8,8 +8,6 @@ void getUsername()
     printf("input name : ");
     scanf("%s",&inputUsername);
 
-
-
     if ((fp = fopen("username.txt","a+"))== NULL)
     {
         //fileCannotOpen();
@@ -17,61 +15,39 @@ void getUsername()
     }
     else
     {
-
-        while(fscanf(fp,"%s",check)!=EOF)
+        fprintf(fp,"%s",inputUsername);
+    }
+    fclose(fp);
+    printf("Hello %s", inputUsername);
+}
+void printUsername() {
+    FILE *fp;
+    char username[10];
+    if ((fp = fopen("username.txt", "r")) == NULL) {
+        //fileCannotOpen();
+        printUsername();
+    } else {
+        while (fgets(username, 10, fp) != NULL)
         {
-            if (inputUsername == check)//check if username exists
-            {
-                i=1; //if it exists i=1
-                break; //should break the while loop
-            }
-            else //if it doesnt write to file
-            {
-                 fprintf(fp,"%s\n",inputUsername);
-                 break;
+            printf("%s", username);
 
-            }
         }
 
 
     }
     fclose(fp);
-    printf("Hello %s", inputUsername);
+    printf("Hello %s", username);
+}
+
+void cls()
+{
+    system("clear");
+
 }
 
 int main()
 {
     getUsername();
-
+    cls();
     return 0;
 }
-
-
-//soohun 
-
-  FILE* fp;
-  char inputUsername[10]; 
-  char check[10];
-  int i=0;
-  printf("input name : ");
-  fgets(inputUsername,10,stdin); //fgets(variableName,size,standardinput)
-  printf("Hello %s\n", inputUsername);
-  
-  if ((fp = fopen("username.txt","a+"))== NULL)
-  {
-    printf("FffF");
-  }
-  else  
-  { 
-     while(feof(fp)==0) //while not at end of file
-     {
-        if (inputUsername == check)//check if username exists
-        {
-          printf("Exists");
-        }
-        else //if it doesnt write to file
-        {
-          fprintf(fp,"%s\n",inputUsername);
-        }
-      }
-  }
