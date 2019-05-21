@@ -11,5 +11,7 @@ void loadGame(); //load from sokoban.txt
 void newGame(); //new game
 void displayLeader(); //shows ranking, command: t, display all map ranking, t<num> display map ranking //top: t //ranking.txt
 void displayHelp(); //display help: h
+void printUsername();
+void cls();
 
 //compile on cygwin
