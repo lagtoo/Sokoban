@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+int main()
+{
+    FILE *fp;
+    int i,j;
+
+    char level1[12][22];
+
+
+    if((fp = fopen("level1.txt","r+"))== NULL)
+    {
+        printf("Cannot Open");
+    }
+    else
+    {
+        for(i=0;i<12;++i)
+        {
+            for(j=0;j<22;++j)
+            {
+
+                fscanf(fp, "%c",&level1[i][j]);
+
+            }
+
+        }
+
+        for(i=0;i<12;++i)
+        {
+            for(j=0;j<22;++j)
+            {
+
+                printf("%c",level1[i][j]);
+            }
+        }
+
+
+        printf("\n\n%c",level1[10][18]);
+
+
+
+    }
+
+    return 0;
+}
