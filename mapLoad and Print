@@ -1,0 +1,133 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define lvl1row 11
+#define lvl1column 23
+
+
+void mapSelect(int choice)
+{
+    FILE *fp;
+    int i,j;
+
+    char level1[lvl1row][lvl1column];
+    char playerlvl1[lvl1row][lvl1column];
+
+
+
+    if((fp = fopen("level1.txt","r+"))== NULL)
+    {
+        printf("Cannot Open");
+    }
+    else
+    {
+        for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                fscanf(fp,"%c",&level1[i][j]);
+            }
+        }
+
+        for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                printf("%c",level1[i][j]);
+            }
+        }
+    }
+
+
+    for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                playerlvl1[i][j] = level1[i][j];
+            }
+        }
+
+    fclose(fp);
+
+}
+//loads map from file and prints it
+int main()
+{
+    //map1 player position = [8][12]
+    FILE *fp;
+    int i,j;
+
+    char level1[lvl1row][lvl1column];
+    char playerlvl1[lvl1row][lvl1column];
+    char choice;
+
+
+
+    if((fp = fopen("level1.txt","r+"))== NULL) //opens file
+    {
+        printf("Cannot Open");
+    }
+    else
+    {
+        for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                fscanf(fp,"%c",&level1[i][j]); //reads map from txt file and stores it in level1 array
+            }
+        }
+
+        for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                printf("%c",level1[i][j]); //displays level1
+            }
+        }
+    }
+
+
+    for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                playerlvl1[i][j] = level1[i][j]; //copies level1 into an array for user manipulation
+            }
+        }
+
+
+    if((fp = fopen("playerMap.txt","w+"))==NULL) //writes the map loaded/changes made into playermap, basically the map the player will use
+    {
+        printf("Cannot Open\n");
+    }
+    else
+    {
+        for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                fprintf(fp,"%c",playerlvl1[i][j]); //writes the map layout into playermap for manipulation
+
+            }
+        }
+
+
+    }
+    fclose(fp);
+
+    while(choice!='q' || choice!='Q') //movement manipulation
+    {
+        choice=getch();
+
+//        switch(choice) //choices
+//        {
+//        case 'w':
+//
+//
+//        }
+
+    }
+
+
+    return 0;
+}
