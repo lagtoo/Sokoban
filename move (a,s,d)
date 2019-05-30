@@ -1,0 +1,75 @@
+case 'a': //move player position 1 left  //change in the X direction
+                if(playerlvl1[playerY][playerX-1] == '.')
+                {
+                    playerlvl1[playerY][playerX]='.';
+                    playerlvl1[playerY][playerX-1]='@';
+                    playerX-=1;
+                    moves+=1;
+                }
+              
+
+else if(playerlvl1[playerY-1][playerX] == '$') 
+                {
+                        if(playerlvl1[playerY][playerX-2]== '.')
+                        {
+                        playerlvl1[playerY][playerX] = '.';
+                        playerlvl1[playerY][playerX-1]='@';
+                        playerlvl1[playerY][playerX-2]= '$';
+                        playerX-=1;
+                        }
+                }
+
+
+  break;
+
+case 's': //moves player position 1 down //change in y direction
+                if(playerlvl1[playerY+1][playerX] == '.')
+                {
+                    playerlvl1[playerY][playerX] = '.';
+                    playerlvl1[playerY+1][playerX]='@';
+                    playerY+=1;
+                    moves+=1;
+                }
+         
+else if(playerlvl1[playerY-1][playerX] == '$') 
+                {
+                        if(playerlvl1[playerY+2][playerX]== '.')
+                        {
+                        playerlvl1[playerY][playerX] = '.';
+                        playerlvl1[playerY+1][playerX]='@';
+                        playerlvl1[playerY+2][playerX]= '$';
+                        playerY+=1;
+                        }
+                }      
+         
+                  
+         break;
+
+case 'd': //moves player position 1 right //change in X direction
+                if(playerlvl1[playerY][playerX+1]=='.')
+                {
+                    playerlvl1[playerY][playerX]='.';
+                    playerlvl1[playerY][playerX+1]='@';
+                    playerX+=1;
+                    moves+=1;
+                }
+             
+             
+  else if(playerlvl1[playerY-1][playerX] == '$') 
+                {
+                        if(playerlvl1[playerY][playerX+2]== '.')
+                        {
+                        playerlvl1[playerY][playerX] = '.';
+                        playerlvl1[playerY][playerX+1]='@';
+                        playerlvl1[playerY][playerX+2]= '$';
+                        playerX+=1;
+                        }
+                }      
+              
+                  break;
+                
+                
+                
+                
+                
+                
