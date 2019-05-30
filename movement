@@ -1,0 +1,171 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define lvl1row 11
+#define lvl1column 23
+
+int main()
+{
+    //map1 player position = [8][12]
+    FILE *fp;
+    int i,j;
+
+    char level1[lvl1row][lvl1column];
+    char playerlvl1[lvl1row][lvl1column];
+    char choice;
+    int playerX,playerY;
+    char hold;
+
+
+    if((fp = fopen("level1.txt","r+"))== NULL) //opens file
+    {
+        printf("Cannot Open");
+    }
+    else
+    {
+        for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                fscanf(fp,"%c",&level1[i][j]); //reads map from txt file and stores it in level1 array
+            }
+        }
+
+        for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                printf("%c",level1[i][j]); //displays level1
+            }
+        }
+    }
+
+
+    for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                playerlvl1[i][j] = level1[i][j]; //copies level1 into an array for user manipulation
+            }
+        }
+
+
+    if((fp = fopen("playerMap.txt","w+"))==NULL) //writes the map loaded/changes made into playermap, basically the map the player will use
+    {
+        printf("Cannot Open\n");
+    }
+    else
+    {
+        for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                fprintf(fp,"%c",playerlvl1[i][j]); //writes the map layout into playermap for manipulation
+
+            }
+        }
+
+
+    }
+    fclose(fp);
+
+
+
+    for(i=0;i<lvl1row;i++)  //finding player position
+    {
+        for(j=0;j<lvl1column;j++)
+        {
+            if(playerlvl1[i][j] == '@')
+            {
+                playerX=j;
+                playerY=i;
+            }
+        }
+    }
+
+    printf("Player X = %d , Player Y = %d\n",playerX,playerY); //lvl x = 12 y=8
+
+
+
+
+    int key; //amount of $ placed in O
+    int moves=0; //amount of moves taken, to be used in leaderboard
+    char undo[100]; //5 undoes, not sure if it's only 5 and if it removes total moves //'u'
+    while(key!=6) //movement manipulation //put 6 keys into O and load next map
+    {
+        choice=getch();
+        printf("%c",choice);
+        switch(choice)
+        {
+            case 'w': //move playerpos1up3 //change in the Y direction
+                if(playerlvl1[playerY-1][playerX] == '.')
+                {
+                    playerlvl1[playerY][playerX]='.';
+                    playerlvl1[playerY-1][playerX]='@';
+                    playerY-=1;
+                    moves+=1;
+
+                }
+                break;
+
+            case 'a': //move player position 1 left  //change in the X direction
+                if(playerlvl1[playerY][playerX-1] == '.')
+                {
+                    playerlvl1[playerY][playerX]='.';
+                    playerlvl1[playerY][playerX-1]='@';
+                    playerX-=1;
+                    moves+=1;
+                }
+                break;
+
+            case 's': //moves player position 1 down //change in y direction
+                if(playerlvl1[playerY+1][playerX] == '.')
+                {
+                    playerlvl1[playerY][playerX] = '.';
+                    playerlvl1[playerY+1][playerX]='@';
+                    playerY+=1;
+                    moves+=1;
+                }
+                break;
+
+            case 'd': //moves player position 1 right //change in X direction
+                if(playerlvl1[playerY][playerX+1]=='.')
+                {
+                    playerlvl1[playerY][playerX]='.';
+                    playerlvl1[playerY][playerX+1]='@';
+                    playerX+=1;
+                    moves+=1;
+                }
+                break;
+
+            case 'u': //undo up to 5 moves
+
+
+            default:
+                printf("\nEh?\n");
+                break;
+
+
+
+
+        }
+        system("cls");
+        printf("\n");
+        for(i=0;i<lvl1row;i++)
+        {
+            for(j=0;j<lvl1column;j++)
+            {
+                printf("%c",playerlvl1[i][j]); //displays level1
+            }
+        }
+
+
+
+
+
+
+    }
+
+
+    return 0;
+}
