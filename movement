@@ -4,6 +4,53 @@
 #define lvl1row 11
 #define lvl1column 23
 
+
+//void mapSelect(int choice)
+//{
+//    FILE *fp;
+//    int i,j;
+//
+//    char level1[lvl1row][lvl1column];
+//    char playerlvl1[lvl1row][lvl1column];
+//
+//
+//
+//    if((fp = fopen("level1.txt","r+"))== NULL)
+//    {
+//        printf("Cannot Open");
+//    }
+//    else
+//    {
+//        for(i=0;i<lvl1row;i++)
+//        {
+//            for(j=0;j<lvl1column;j++)
+//            {
+//                fscanf(fp,"%c",&level1[i][j]);
+//            }
+//        }
+//
+//        for(i=0;i<lvl1row;i++)
+//        {
+//            for(j=0;j<lvl1column;j++)
+//            {
+//                printf("%c",level1[i][j]);
+//            }
+//        }
+//    }
+//
+//
+//    for(i=0;i<lvl1row;i++)
+//        {
+//            for(j=0;j<lvl1column;j++)
+//            {
+//                playerlvl1[i][j] = level1[i][j];
+//            }
+//        }
+//
+//    fclose(fp);
+//
+//}
+//loads map from file and prints it
 int main()
 {
     //map1 player position = [8][12]
@@ -106,6 +153,18 @@ int main()
                     moves+=1;
 
                 }
+                else if(playerlvl1[playerY-1][playerX] == '$') //moves boxes 1 up
+                {
+                        if(playerlvl1[playerY-2][playerX]== '.')
+                        {
+                        playerlvl1[playerY][playerX] = '.';
+                        playerlvl1[playerY-1][playerX]='@';
+                        playerlvl1[playerY-2][playerX]= '$';
+                        playerY-=1;
+                        }
+                }
+
+
                 break;
 
             case 'a': //move player position 1 left  //change in the X direction
@@ -158,6 +217,8 @@ int main()
                 printf("%c",playerlvl1[i][j]); //displays level1
             }
         }
+
+
 
 
 
