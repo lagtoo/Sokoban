@@ -31,7 +31,7 @@ case 's': //moves player position 1 down //change in y direction
                     moves+=1;
                 }
          
-else if(playerlvl1[playerY-1][playerX] == '$') 
+  else if(playerlvl1[playerY+1][playerX] == '$')
                 {
                         if(playerlvl1[playerY+2][playerX]== '.')
                         {
@@ -40,7 +40,7 @@ else if(playerlvl1[playerY-1][playerX] == '$')
                         playerlvl1[playerY+2][playerX]= '$';
                         playerY+=1;
                         }
-                }      
+                }  
          
                   
          break;
@@ -55,16 +55,16 @@ case 'd': //moves player position 1 right //change in X direction
                 }
              
              
-  else if(playerlvl1[playerY-1][playerX] == '$') 
+   else if(playerlvl1[playerY][playerX+1] == '$')
                 {
                         if(playerlvl1[playerY][playerX+2]== '.')
                         {
-                        playerlvl1[playerY][playerX] = '.';
-                        playerlvl1[playerY][playerX+1]='@';
-                        playerlvl1[playerY][playerX+2]= '$';
-                        playerX+=1;
+                            playerlvl1[playerY][playerX] = '.';
+                            playerlvl1[playerY][playerX+1]='@';
+                            playerlvl1[playerY][playerX+2]= '$';
+                            playerX+=1;
                         }
-                }      
+                }
               
                   break;
                 
