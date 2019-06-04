@@ -8,7 +8,7 @@ case 'a': //move player position 1 left  //change in the X direction
                 }
               
 
-else if(playerlvl1[playerY-1][playerX] == '$') 
+else if(playerlvl1[playerY][playerX-1] == '$') 
                 {
                         if(playerlvl1[playerY][playerX-2]== '.')
                         {
