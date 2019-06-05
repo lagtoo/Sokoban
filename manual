@@ -1,5 +1,4 @@
-  1 #include<stdio.h>
-  2 int main(void)
+void manual()
   3 {
   4     printf("****************************************\n");
   5     printf("**\t\t메뉴얼~\t\t      **\n");
