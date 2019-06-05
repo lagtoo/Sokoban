@@ -1,17 +1,17 @@
 void manual()
-  3 {
-  4     printf("****************************************\n");
-  5     printf("**\t\t메뉴얼~\t\t      **\n");
-  6     printf("** h(왼쪽), j(아래), k(위), l(오른쪽) **\n");
-  7     printf("**\t\tu(undo)\t\t      **\n");
-  8     printf("**\t\tr(replay) \t      **\n");
-  9     printf("**\t\tn(new)\t\t      **\n");
- 10     printf("**\t\te(exit)\t\t      **\n");
- 11     printf("**\t\ts(save)\t\t      **\n");
- 12     printf("**\t     f(file load)\t      **\n");
- 13     printf("**\t    d(display help)\t      **\n");
- 14     printf("**\t\tt(top) \t\t      **\n");
- 15     printf("****************************************\n");
- 16 return 0;
- 17
- 18 }
+{
+    printf("****************************************\n");     
+    printf("**\t\t메뉴얼~\t\t      **\n");
+    printf("** h(왼쪽), j(아래), k(위), l(오른쪽) **\n";
+    printf("**\t\tu(undo)\t\t      **\n");
+    printf("**\t\tr(replay) \t      **\n");
+    printf("**\t\tn(new)\t\t      **\n");
+    printf("**\t\te(exit)\t\t      **\n");
+    printf("**\t\ts(save)\t\t      **\n");
+    printf("**\t     f(file load)\t      **\n");
+    printf("**\t    d(display help)\t      **\n");
+    printf("**\t\tt(top) \t\t      **\n");
+    printf("****************************************\n");
+return 0;
+
+}
