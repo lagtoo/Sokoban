@@ -212,9 +212,7 @@ int main()
 }
 
 // 사용자 움직임
-void undo(int);
-
- int getch(void)
+int getch(void)
     {
         int ch;
         struct termios buf, save;
@@ -229,7 +227,7 @@ void undo(int);
         return ch;
     }
 
-int main()
+void movement()
 {
     //map1 player position = [8][12]
     FILE *fp;
@@ -331,19 +329,7 @@ int main()
     while(key==0) //movement manipulation //put 6 keys into O and load next map
 	{	printf("steps: %d",steps); //step수 카운트
         
-//        for(i=0;i<lvl1row;i++)  //check to ensure O isnt overwritten //might work if i implement moving within the O's
-//        {
-//            for(j=0;j<lvl1column;j++)
-//            {
-//                if(map1Comp[i][j] == 'O' && playerlvl1[i][j] =='.')
-//                {
-//                    playerlvl1[i][j] = 'O';
-//                }
-//
-//            }
-//        }
-
-        choice=getch();
+        choice = getch();
         printf("%c",choice);
 			
 		switch(choice)
@@ -562,3 +548,4 @@ int main()
 
     return 0;
 }
+
