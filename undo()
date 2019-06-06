@@ -1,0 +1,59 @@
+// 배열 선언
+char undomap[5][50][50];
+
+// 함수선언
+void clearUndo();
+void saveUndo();
+int loadUndo();
+
+void ClearUndo(){ // 되돌리기 배열 비우는 함수
+    for (int i=0;i<5;i++){
+        for (int j=0;j<50;j++){
+            for (int k=0;k<50;k++){
+                undomap[i][j][k]=='X';
+            }
+        }
+    }
+}
+
+void SaveUndo(){ // 되돌리기 맵 생성함수
+    for (int i=4;i>0;i--){
+        for (int j=0;j<50;j++){
+            for (int k=0;k<50;k++){
+                undomap[i][j][k]=undomap[i-1][j][k];
+            }
+        }
+    }
+    for (int i=0;i<50;i++){
+        for (int j=0;j<50;j++){
+            undomap[0][i][j]=level[i][j];
+        }
+    }
+}
+
+int LoadUndo(){ // 되돌린것 불러오는 함수
+    steps++;
+    if (undomap[0][0][0]=='X'){
+        printf("더이상 되돌릴수 없습니다.\n");
+        return 0;
+    }
+    for (int i=0;i<50;i++){
+        for (int j=0;j<50;j++){
+            level[i][j]=undomap[0][i][j];
+        }
+    }
+    for (int i=0;i<4;i++){
+        for (int j=0;j<50;j++){
+            for (int k=0;k<50;k++){
+                undomap[i][j][k]=undomap[i+1][j][k];
+            }
+        }
+    }
+    for (int i=0;i<50;i++){
+        for (int j=0;j<50;j++){
+            undomap[4][i][j]='X';
+        }
+    }
+    map();
+    return 0;
+}
