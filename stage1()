@@ -3,6 +3,8 @@ void stage1()
 
   while (key == 0)
   {
+  printfUsername();
+  voidmapselect()
   
   }
 
