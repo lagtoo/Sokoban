@@ -1,0 +1,9 @@
+void stage1()
+{
+
+  while (key == 0)
+  {
+  
+  }
+
+}
