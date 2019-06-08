@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+
+
+void writeRanking(char username[10], int moves, int map) //writes ranking to ranking.txt file
+{
+    FILE *fp;
+    int i,j,rankedMoves; //need 3 variables to store and compare each line in the file //if there is already 5 scores, compare those 5 and the new score and rewrite them to a file //else just append
+    char usernameCheck[10];
+    int rankedMovesCheck;
+    int amount=0;
+        switch(map)
+        {
+        case 1:
+            if ((fp = fopen("ranking.txt","r"))== NULL)
+            {
+                printf("File could not be opened.");
+            }
+            else
+            {
+                //first check the amount of entries in rankings
+                while(!feof(fp))
+                {
+                    fscanf(fp,"%s %d",usernameCheck,&rankedMovesCheck);
+                    amount+=1;
+
+                }
+                fclose(fp); //close file because we might use mode 'a'
+
+                if(amount<6) //if there are less than 6 entries (including "map 1") append new score
+                {
+                    if((fp = fopen("ranking.txt","a"))==NULL)
+                    {
+                        printf("File could not be opened.");
+                    }
+                    else
+                    {
+                        fprintf(fp,"\n%s %d",username,moves);
+                    }
+                    fclose(fp);
+
+                    //need to sort and ensure only 6 entries are in the file
+                }
+                else if(amount==6) //if there are already 6(including "map <num>" entries, sort then write
+                {
+
+
+
+
+
+                }
+
+
+
+
+            }
+        }
+
+}
+
+
+
+
+int main()
+{
+    int moves, map;
+    char username[10];
+    int i; //testing if only 5 scores are allowed
+    moves=10;
+    map=1;
+
+        printf("Enter a username\n");
+        scanf("%s",username);
+        printf("\nEnter moves: \n");
+        scanf("%d",&moves);
+        writeRanking(username,moves,map);
+
+    return 0;
+}
