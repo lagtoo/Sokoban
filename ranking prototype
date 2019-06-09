@@ -5,10 +5,15 @@
 void writeRanking(char username[10], int moves, int map) //writes ranking to ranking.txt file
 {
     FILE *fp;
-    int i,j,rankedMoves; //need 3 variables to store and compare each line in the file //if there is already 5 scores, compare those 5 and the new score and rewrite them to a file //else just append
+    int i=0,j,rankedMoves; //need 3 variables to store and compare each line in the file //if there is already 5 scores, compare those 5 and the new score and rewrite them to a file //else just append
     char usernameCheck[10];
     int rankedMovesCheck;
     int amount=0;
+
+    int sortMoves[6];
+    char sortNames[6][10];
+    int holdMoves;
+    char holdName[10];
         switch(map)
         {
         case 1:
@@ -41,11 +46,66 @@ void writeRanking(char username[10], int moves, int map) //writes ranking to ran
 
                     //need to sort and ensure only 6 entries are in the file
                 }
-                else if(amount==6) //if there are already 6(including "map <num>" entries, sort then write
+                //else
+                if(amount==6) //if there are already 6(including "map <num>" entries, sort then write//implement a 2d array
                 {
+                    if((fp = fopen("ranking.txt","r"))==NULL)//sorting
+                    {
+                            printf("File could not be opened.");
+                    }
+                    else
+                    {
+                        while(!feof(fp)) //read the contents of file into an array to sort by smallest (top) to largest (bottom)
+                        {
+                            fscanf(fp,"%c %d",sortNames[i],&sortMoves[i]);
+                            i++;
+                        }
+                        fclose(fp);
+
+                        //sort the array first, if the new ranking is lower than the lowest, then replace it
+
+                        for(i=0;i<6;i++)
+                        {
+                            for(j=i+1;j<6;j++)
+                            {
+                                if(sortMoves[i]>sortMoves[j]) //sort by ascending order
+                                {
+                                    holdMoves=sortMoves[i];
+                                    sortMoves[i]=sortMoves[j];
+                                    sortMoves[j]=holdMoves;
+
+                                    //.strcopy(destination,source);
+                                    strcpy(holdName,sortNames[i]);
+                                    strcpy(sortNames[i],sortNames[j]);
+                                    strcpy(sortNames[j],holdName);
+                                }
+                            }
+                        }
+
+                        if(moves<sortMoves[5]) //if the current moves is less than the last record, replace the last record
+                        {
+                            sortMoves[5]=moves;
+                            strcpy(sortNames[5],username);
+                        }
 
 
+                    }
 
+                    //write to file
+                    if((fp = fopen("ranking.txt","w"))==NULL)//sorting
+                    {
+                            printf("File could not be opened.");
+                    }
+                    else
+                    {
+                        for(i=0;i<6;i++)
+                        {
+                            fputs(sortNames[i],fp);
+                            fprintf(fp," %d\n",sortMoves[i]);
+                        }
+                        fclose(fp);
+
+                    }
 
 
                 }
@@ -74,6 +134,8 @@ int main()
         printf("\nEnter moves: \n");
         scanf("%d",&moves);
         writeRanking(username,moves,map);
+
+        //printing the file contents to check
 
     return 0;
 }
