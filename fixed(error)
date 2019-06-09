@@ -1,0 +1,408 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<termios.h>
+#define lvl1row 11
+#define lvl1column 23
+
+int movement();
+int lvl1();
+int lvl2();
+void getUsername();
+void printUsername();
+int map();
+
+int key=0; //amount of $ placed in O
+int moves=0; //amount of moves taken, to be used in leaderboard
+char undo[100]; //5 undoes, not sure if it's only 5 and if it removes total moves //'u'
+
+void getUsername()
+{
+    FILE *fp;
+    char inputUsername[10];
+    char check[10];
+    int i=0;
+    printf("input name : ");
+    scanf("%s",&inputUsername);
+
+    if ((fp = fopen("username.txt","a+"))== NULL)
+    {
+        //fileCannotOpen();
+        getUsername();
+    }
+    else
+    {
+        fprintf(fp,"%s",inputUsername);
+    }
+
+    fclose(fp);
+//    printf("Hello %s\n", inputUsername);
+    system("clear");
+
+}
+void printUsername() 
+{
+    FILE *fp;
+    char username[10];
+    if ((fp = fopen("username.txt", "r")) == NULL) {
+        //fileCannotOpen();
+        printUsername();
+    }
+    else
+        {
+        while (fgets(username, 10, fp) != NULL)
+        {
+
+        }
+
+    }
+    fclose(fp);
+    printf("Hello %s", username);
+}
+
+
+int getch(void)
+    {
+        int ch;
+        struct termios buf, save;
+        tcgetattr(0,&save);
+        buf = save;
+        buf.c_lflag &= ~(ICANON|ECHO);
+        buf.c_cc[VMIN] = 1;
+        buf.c_cc[VTIME] = 0;
+        tcsetattr(0, TCSAFLUSH, &buf);
+        ch = getchar();
+        tcsetattr(0, TCSAFLUSH, &save);
+        return ch;
+    }
+
+int map(){
+    FILE *fp;
+    int i,j;
+    char lvlrow=50;
+	char lvlcolumn=50;
+	char level[lvlrow][lvlcolumn];
+    char mapComp[lvlrow][lvlcolumn];
+    char playerlvl[lvlrow][lvlcolumn];
+    char choice;
+    int playerX,playerY;
+    char hold;
+    int box=0,checkBox=0;
+	
+    if((fp = fopen("level1.txt","r+"))== NULL) //opens file
+    {
+        printf("Cannot Open");
+    }
+    else
+    {
+        for(i=0;i<lvlrow;i++)
+        {
+            for(j=0;j<lvlcolumn;j++)
+            {
+                fscanf(fp,"%c",&level[i][j]); //reads map from txt file and stores it in level1 array
+            }
+        }
+
+        for(i=0;i<lvlrow;i++)
+        {
+            for(j=0;j<lvlcolumn;j++)
+            {
+                printf("%c",level[i][j]); //displays level1
+            }
+        }
+    }
+  for(i=0;i<lvlrow;i++)
+        {
+            for(j=0;j<lvlcolumn;j++)
+            {
+                playerlvl[i][j] = level[i][j]; //copies level1 into an array for user manipulation
+                mapComp[i][j] = level[i][j]; //copies lvl1 into an array to compare
+            }
+        }
+
+
+    if((fp = fopen("playerMap.txt","w+"))==NULL) //writes the map loaded/changes made into playermap, basically the map the player will use
+    {
+        printf("Cannot Open\n");
+    }
+    else
+    {
+        for(i=0;i<lvlrow;i++)
+        {
+            for(j=0;j<lvlcolumn;j++)
+            {
+                fprintf(fp,"%c",playerlvl[i][j]); //writes the map layout into playermap for manipulation
+
+            }
+			
+        }
+	}
+
+    fclose(fp);
+
+				 
+ for(i=0;i<lvlrow;i++)  //finding player position
+    {
+        for(j=0;j<lvlcolumn;j++)
+        {
+            if(playerlvl[i][j] == '@')
+            {
+                playerX=j;
+                playerY=i;
+            }
+        }
+    }
+
+
+    for(i=0;i<lvlrow;i++)  //finding player position
+    {
+        for(j=0;j<lvlcolumn;j++)
+        {
+            if(playerlvl[i][j] == '@')
+            {
+                playerX=j;
+                playerY=i;
+            }
+        }
+    }
+    for(i=0;i<lvlrow;i++)  //ensure's O's stay on the map
+        {
+            for(j=0;j<lvlcolumn;j++)
+            {
+                if(mapComp[i][j] == 'O' && playerlvl[i][j] =='.')
+                {
+                    playerlvl[i][j] = 'O'; //makes sure that O's stay on the map
+
+                }
+
+            }
+        }
+
+        system("clear");
+        printf("\n");
+        for(i=0;i<lvlrow;i++)
+        {
+            for(j=0;j<lvlcolumn;j++)
+            {
+				if(playerlvl[i][j]=='.'){
+					printf(" ");
+				}
+				else
+                	printf("%c",playerlvl[i][j]); //displays level1
+            }
+        }
+    }
+
+int movement()
+{
+    //map1 player position = [8][12]
+    FILE *fp;
+    int i,j;
+    char playerlvl[lvl1row][lvl1column];
+    char choice;
+    int playerX,playerY;
+    char hold;
+    int box=0,checkBox=0;
+   	int steps; 
+    
+    while(key==0) //movement manipulation //put 6 keys into O and load next map
+	{   printf("Steps : %d\n",steps);	
+		map(); 
+        printUsername();
+        choice=getch();
+		switch(choice)
+        {
+            case 'k': //move playerpos1up3 //change in the Y direction
+                steps++;
+				if(playerlvl[playerY-1][playerX] == '.')
+                {
+                    playerlvl[playerY][playerX]='.';
+                    playerlvl[playerY-1][playerX]='@';
+                    playerY-=1;
+                    moves+=1;
+
+                }
+                else if(playerlvl[playerY-1][playerX] == '$') //moves boxes 1 up
+                {
+                        if(playerlvl[playerY-2][playerX]== '.')//moves box up when its an empty space
+                        {
+                            playerlvl[playerY][playerX] = '.';
+                            playerlvl[playerY-1][playerX]='@';
+                            playerlvl[playerY-2][playerX]= '$';
+                            playerY-=1;
+                            moves+=1;
+                        }
+                        else if(playerlvl[playerY-2][playerX] == 'O') //moves box up when theres a circle
+                        {
+                            playerlvl[playerY][playerX] = '.';
+                            playerlvl[playerY-1][playerX] = '@';
+                            playerlvl[playerY-2][playerX] = '$';
+                            playerY-=1;
+                            moves+=1;
+                        }
+                }
+                else if(playerlvl[playerY-1][playerX]=='O')
+                {
+                    playerlvl[playerY][playerX] = '.';
+                    playerlvl[playerY-1][playerX] = '@';
+                    playerY-=1;
+                    moves+=1;
+                }
+
+
+                break;
+
+            case
+            'h': //move player position 1 left  //change in the X direction
+            	steps++;    
+				if(playerlvl[playerY][playerX-1] == '.')
+                {
+                    playerlvl[playerY][playerX]='.';
+                    playerlvl[playerY][playerX-1]='@';
+                    playerX-=1;
+                    moves+=1;
+                }
+                else if(playerlvl[playerY][playerX-1] == '$') //allows boxes to be moved
+                {
+                        if(playerlvl[playerY][playerX-2]== '.') //moves boxes if there is an empty space
+                        {
+                            playerlvl[playerY][playerX] = '.';
+                            playerlvl[playerY][playerX-1]='@';
+                            playerlvl[playerY][playerX-2]= '$';
+                            playerX-=1;
+                            moves+=1;
+                        }
+                        else if(playerlvl[playerY][playerX-2] == 'O') //moves boxes into O
+                        {
+                            playerlvl[playerY][playerX] = '.';
+                            playerlvl[playerY][playerX-1] ='@';
+                            playerlvl[playerY][playerX-2]='$';
+                            playerX+=1;
+                            moves+=1;
+                        }
+                }
+                else if(playerlvl[playerY][playerX-1]=='O') //moves player into O
+                {
+                    playerlvl[playerY][playerX] ='.';
+                    playerlvl[playerY][playerX-1]='@';
+                    playerX-=1;
+                    moves+=1;
+                }
+                break;
+
+            case 'j': //moves player position 1 down //change in y direction
+                steps++;
+				if(playerlvl[playerY+1][playerX] == '.')
+                {
+                    playerlvl[playerY][playerX] = '.';
+                    playerlvl[playerY+1][playerX]='@';
+                    playerY+=1;
+                    moves+=1;
+                }
+                else if(playerlvl[playerY+1][playerX] == '$') //moves player down with box
+                {
+                        if(playerlvl[playerY+2][playerX]== '.')
+                        {
+                        playerlvl[playerY][playerX] = '.';
+                        playerlvl[playerY+1][playerX]='@';
+                        playerlvl[playerY+2][playerX]= '$';
+                        playerY+=1;
+                        moves+=1;
+                        }
+                        else if(playerlvl[playerY+2][playerX] == 'O') //allows box to move in O
+                        {
+                            playerlvl[playerY][playerX] ='.';
+                            playerlvl[playerY+1][playerX] = '@';
+                            playerlvl[playerY+2][playerX] ='$';
+                            playerY+=1;
+                            moves+=1;
+                        }
+                }
+                else if(playerlvl[playerY+1][playerX]=='O') //moves player into O
+                {
+                    playerlvl[playerY][playerX] ='.';
+                    playerlvl[playerY+1][playerX]='@';
+                    playerY+=1;
+                    moves+=1;
+                }
+                break;
+
+            case 'l': //moves player position 1 right //change in X direction
+                steps++;
+				if(playerlvl[playerY][playerX+1]=='.')
+                {
+                    playerlvl[playerY][playerX]='.';
+                    playerlvl[playerY][playerX+1]='@';
+                    playerX+=1;
+                    moves+=1;
+                }
+                else if(playerlvl[playerY][playerX+1] == '$')
+                {
+                        if(playerlvl[playerY][playerX+2]== '.') //allows $ to be moved into empty spaces
+                        {
+                            playerlvl[playerY][playerX] = '.';
+                            playerlvl[playerY][playerX+1]='@';
+                            playerlvl[playerY][playerX+2]= '$';
+                            playerX+=1;
+                            moves+=1;
+                        }
+                        //allows $ to be moved into O multiple times
+                        else if(playerlvl[playerY][playerX+2] == 'O')
+                        {
+                            playerlvl[playerY][playerX] = '.';
+                            playerlvl[playerY][playerX+1] = '@';
+                            playerlvl[playerY][playerX+2] = '$';
+                            playerX+=1;
+                            moves+=1;
+                        }
+                }
+                else if(playerlvl[playerY][playerX+1]=='O') //allows player to move in circle
+                {
+                    playerlvl[playerY][playerX] = '.';
+                    playerlvl[playerY][playerX+1] = '@';
+                    playerX+=1;
+                    moves+=1;
+                }
+                break;
+
+            case 'u': //undo up to 5 moves
+				steps++;
+				if(playerlvl[playerY][playerX]=='.'){
+					playerlvl[playerY+1][playerX+1]='.';
+					playerlvl[playerY+1][playerX+1]='@';
+					playerlvl[playerY+2][playerX+2]='$';
+					playerX-=1;
+					playerY-=1;
+					moves-=1;
+				}
+				break;
+
+            default:
+                printf("\nEh?\n");
+                break;
+        }
+    return movement();
+}
+}
+int lvl1(){
+    map();
+	movement();
+    return 0;
+}
+//int lvl2(){
+  //  map();
+	//movement();
+    //return lvl2();
+//}
+
+int main()
+{
+    getUsername();
+	printUsername();
+	lvl1();
+	map();
+	movement();
+    return 0;
+}
+
+
+
